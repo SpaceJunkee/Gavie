@@ -1,23 +1,23 @@
 package com.example.gamielist;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActionBar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Context;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 
-public class GameList extends AppCompatActivity {
+public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
+
+    MyRecyclerViewAdapter adapter;
 
     ArrayList<String> gameList = new ArrayList<>();
 
@@ -28,8 +28,11 @@ public class GameList extends AppCompatActivity {
 
         //variables
         final EditText gameTitleEdit = findViewById(R.id.gameTitleEditText);
-        final ListView gameLV = findViewById(R.id.gameListView);
+        final RecyclerView recyclerView = findViewById(R.id.gameListView);
 
+
+
+        //Save EditText Content to arrayList
         gameTitleEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -39,16 +42,30 @@ public class GameList extends AppCompatActivity {
                     gameList.add(gameTitleEdit.getText().toString());
                     handled = true;
                 }
+                //This will close the keyboard after the user has pushed the GO button on the soft keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(gameTitleEdit.getWindowToken(), 0);
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>((getApplicationContext()),
-                        android.R.layout.simple_list_item_1, gameList);
-
-                gameLV.setAdapter(arrayAdapter);
+                //Clears text when user pushes go on editText
+                gameTitleEdit.getText().clear();
 
                 return handled;
             }
         });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyRecyclerViewAdapter(this,gameList);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+
+        //This will adjust the list when the keyboard appears so the list won't push off screen
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+    }//OnCreate
+
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + ++position, Toast.LENGTH_SHORT).show();
     }
-}
+}//Class
 
 
