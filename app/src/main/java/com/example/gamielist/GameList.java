@@ -39,8 +39,13 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
                 boolean handled = false;
 
                 if(i == EditorInfo.IME_ACTION_GO){
-                    gameList.add(gameTitleEdit.getText().toString());
+                    gameList.add(gameTitleEdit.getText().toString().trim());
                     handled = true;
+                }
+
+                //This will remove any entry that has no characters in the name
+                if(gameList.contains("")){
+                    gameList.remove(gameList.get(gameList.size() -1));
                 }
                 //This will close the keyboard after the user has pushed the GO button on the soft keyboard
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

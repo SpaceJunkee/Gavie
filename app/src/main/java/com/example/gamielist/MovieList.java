@@ -39,8 +39,13 @@ public class MovieList extends AppCompatActivity implements MyRecyclerViewAdapte
                 boolean handled = false;
 
                 if(i == EditorInfo.IME_ACTION_GO){
-                    movieList.add(movieTitleEdit.getText().toString());
+                    movieList.add(movieTitleEdit.getText().toString().trim());//User cannot enter empty space before or after text
                     handled = true;
+                }
+
+                //This will remove any entry that has no characters in the name
+                if(movieList.contains("")){
+                    movieList.remove(movieList.get(movieList.size() -1));
                 }
                 //This will close the keyboard after the user has pushed the GO button on the soft keyboard
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
