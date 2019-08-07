@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -68,7 +70,16 @@ public class MovieList extends AppCompatActivity implements MyRecyclerViewAdapte
 
     }//OnCreate
 
+    /*Allows me to add a google search to each item of the list to search the text placed in that
+    item allowing the user to quickly look up content on that specific element*/
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + ++position, Toast.LENGTH_SHORT).show();
+        String googleSearch = "https://www.rottentomatoes.com/search/?search=" + adapter.getItem(position);
+        Uri webAddress = Uri.parse(googleSearch);
+
+        //Checks to see if any browser can handle this request and if so go ahead and open that browser
+        Intent googleIntent = new Intent(Intent.ACTION_VIEW, webAddress);
+        if(googleIntent.resolveActivity(getPackageManager()) != null){
+            startActivity(googleIntent);
+        }
     }
 }//class
