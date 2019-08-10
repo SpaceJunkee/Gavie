@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,7 +14,9 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -24,8 +27,6 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
     MyRecyclerViewAdapter adapter;
 
     ArrayList<String> gameList = new ArrayList<>();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
     public void onItemClick(View view, int position) {
 
         final Switch gameGoogleSwitch = findViewById(R.id.movieGoogleSwitch);
+
 
         Uri webAddress;
 

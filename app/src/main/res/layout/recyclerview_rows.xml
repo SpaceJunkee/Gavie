@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rowLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -13,7 +14,7 @@
 
         android:background="@drawable/custom_ripple"
         android:textAllCaps="false"
-        android:textColor="#1F1F1F"
+        android:textColor="#131313"
         android:textSize="21sp" />
 
 
@@ -21,7 +22,19 @@
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/rowButton"
+        android:layout_width="20dp"
+        android:layout_height="37dp"
+        android:layout_weight="0"
+        android:background="#00FFFFFF"
+        android:text="X"
+        android:textColor="#BAF51818"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

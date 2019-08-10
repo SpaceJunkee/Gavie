@@ -1,23 +1,27 @@
 package com.example.gamielist;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private ArrayList<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
+
     // data is passed into the constructor
-    MyRecyclerViewAdapter(Context context, List<String> data) {
+    MyRecyclerViewAdapter(Context context, ArrayList<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -46,16 +50,47 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        CheckBox checkBox;
+        Button minus;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.listName1);
+            checkBox = itemView.findViewById(R.id.checkBox1);
+            minus = itemView.findViewById(R.id.rowButton);
             itemView.setOnClickListener(this);
+
+            //Allows me to delete the current row
+            minus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    try {
+                        mData.remove(position);
+                        notifyItemRemoved(position);
+                    }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
+                }
+            });
+
+            //Turns the text a different colour when checked to indicate completion
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(checkBox.isChecked()) {
+                        myTextView.setTextColor(Color.parseColor("#06B86F"));
+                    }else{
+                        myTextView.setTextColor(Color.parseColor("#131313"));
+                    }
+                }
+            });
+
+
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+
         }
     }
 
@@ -73,6 +108,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
+
+
 }
 
 
