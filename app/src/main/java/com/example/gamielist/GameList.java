@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -34,9 +35,6 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
         //variables
         final EditText gameTitleEdit = findViewById(R.id.gameTitleEditText);
         final RecyclerView recyclerView = findViewById(R.id.gameListView);
-
-
-
 
 
         //Save EditText Content to arrayList
