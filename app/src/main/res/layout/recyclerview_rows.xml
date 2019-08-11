@@ -15,7 +15,7 @@
         android:background="@drawable/custom_ripple"
         android:textAllCaps="false"
         android:textColor="#131313"
-        android:textSize="21sp" />
+        android:textSize="21dp" />
 
 
     <CheckBox
@@ -27,13 +27,13 @@
 
     <Button
         android:id="@+id/rowButton"
-        android:layout_width="20dp"
-        android:layout_height="37dp"
+        android:layout_width="40dp"
+        android:layout_height="33dp"
         android:layout_weight="0"
         android:background="#00FFFFFF"
         android:text="X"
         android:textColor="#BAF51818"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
 
