@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/movieButton"
-        android:layout_width="207dp"
-        android:layout_height="732dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#00BCD4"
         android:text="MOVIES"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -25,8 +25,8 @@
 
     <Button
         android:id="@+id/gameButton"
-        android:layout_width="202dp"
-        android:layout_height="738dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#FFEB3B"
         android:text="GAMES"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
