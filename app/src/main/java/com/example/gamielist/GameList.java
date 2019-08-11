@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
@@ -32,11 +37,20 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
+        loadData();
 
         //variables
         final EditText gameTitleEdit = findViewById(R.id.gameTitleEditText);
         final RecyclerView recyclerView = findViewById(R.id.gameListView);
 
+        //Functionality for save button
+        final Button saveButton =findViewById(R.id.saveButtonGame);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveData();
+            }
+        });
 
         //Save EditText Content to arrayList
         gameTitleEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -73,6 +87,29 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
     }//OnCreate
+
+    //Save data method for savebutton functionality
+    private void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(gameList);
+        editor.putString("game list", json);
+        editor.apply();
+    }
+
+    //Load list data on start up
+    private void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("game list", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        gameList = gson.fromJson(json, type);
+
+        if(gameList == null){
+            gameList = new ArrayList<>();
+        }
+    }
 
 
     /*Allows me to add a google search to each item of the list to search the text placed in that

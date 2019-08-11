@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -12,10 +13,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
@@ -29,10 +36,20 @@ public class MovieList extends AppCompatActivity implements MyRecyclerViewAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list2);
+        loadData();
 
         //variables
         final EditText movieTitleEdit = findViewById(R.id.movieTitleEditText);
         final RecyclerView recyclerView = findViewById(R.id.movieListView);
+
+        //Functionality for save button
+        final Button saveButton =findViewById(R.id.saveButtonMovie);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveData();
+            }
+        });
 
 
         //Save EditText Content to arrayList
@@ -70,6 +87,29 @@ public class MovieList extends AppCompatActivity implements MyRecyclerViewAdapte
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
     }//OnCreate
+
+    //Save data method for savebutton functionality
+    private void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(movieList);
+        editor.putString("movie list", json);
+        editor.apply();
+    }
+
+    //Load list data on start up
+    private void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("movie list", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        movieList = gson.fromJson(json, type);
+
+        if(movieList == null){
+            movieList = new ArrayList<>();
+        }
+    }
 
     /*Allows me to add a google search to each item of the list to search the text placed in that
     item allowing the user to quickly look up content on that specific element*/
