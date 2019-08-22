@@ -2,6 +2,7 @@ package com.example.gamielist;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,9 +78,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 @Override
                 public void onClick(View v) {
                     if(checkBox.isChecked()) {
-                        myTextView.setTextColor(Color.parseColor("#06B86F"));
+                        myTextView.setTextColor(Color.parseColor("#009252"));
+                        myTextView.setTypeface(null, Typeface.BOLD_ITALIC);
                     }else{
                         myTextView.setTextColor(Color.parseColor("#131313"));
+                        myTextView.setTypeface(null, Typeface.NORMAL);
                     }
                 }
             });
