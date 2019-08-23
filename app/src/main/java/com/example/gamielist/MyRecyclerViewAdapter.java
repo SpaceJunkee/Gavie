@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +20,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private ArrayList<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    Context mContext;
+    Toast mCurrentToast;
 
 
     // data is passed into the constructor
     MyRecyclerViewAdapter(Context context, ArrayList<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.mContext = context;
     }
 
     // inflates the row layout from xml when needed
@@ -51,20 +55,29 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        Button minus;
+        Button delete;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.listName1);
-            minus = itemView.findViewById(R.id.rowButton);
+            delete = itemView.findViewById(R.id.rowButton);
             itemView.setOnClickListener(this);
 
+            myTextView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int position = getAdapterPosition();
+                    return true;
+                }
+            });
+
             //Allows me to delete the current row
-            minus.setOnClickListener(new View.OnClickListener() {
+            delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     try {
+                        showToast(mData.get(position) + " has been removed");
                         mData.remove(position);
                         notifyItemRemoved(position);
                     }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
@@ -87,6 +100,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
+    }
+
+    //Toast method which updates toast whenever a new toast is created so it is shown instantly
+    void showToast(String text)
+    {
+        if(mCurrentToast != null)
+        {
+            mCurrentToast.cancel();
+        }
+        mCurrentToast = Toast.makeText(mContext, text, Toast.LENGTH_SHORT);
+        mCurrentToast.show();
+
     }
 
     // parent activity will implement this method to respond to click events
