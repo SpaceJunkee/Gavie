@@ -51,13 +51,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        CheckBox checkBox;
         Button minus;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.listName1);
-            checkBox = itemView.findViewById(R.id.checkBox1);
             minus = itemView.findViewById(R.id.rowButton);
             itemView.setOnClickListener(this);
 
@@ -72,22 +70,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
                 }
             });
-
-            //Turns the text a different colour when checked to indicate completion
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(checkBox.isChecked()) {
-                        myTextView.setTextColor(Color.parseColor("#009252"));
-                        myTextView.setTypeface(null, Typeface.BOLD_ITALIC);
-                    }else{
-                        myTextView.setTextColor(Color.parseColor("#131313"));
-                        myTextView.setTypeface(null, Typeface.NORMAL);
-                    }
-                }
-            });
-
-
         }
 
         @Override

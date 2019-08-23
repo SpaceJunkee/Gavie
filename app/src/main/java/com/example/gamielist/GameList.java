@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,6 +50,7 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
             @Override
             public void onClick(View view) {
                 saveData();
+                Toast.makeText(getBaseContext(),"List Saved", Toast.LENGTH_SHORT).show();
             }
         });
 

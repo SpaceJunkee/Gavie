@@ -48,6 +48,7 @@ public class MovieList extends AppCompatActivity implements MyRecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 saveData();
+                Toast.makeText(getBaseContext(),"List Saved", Toast.LENGTH_SHORT).show();
             }
         });
 
