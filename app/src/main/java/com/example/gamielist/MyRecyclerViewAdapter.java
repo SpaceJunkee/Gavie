@@ -63,14 +63,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             delete = itemView.findViewById(R.id.rowButton);
             itemView.setOnClickListener(this);
 
-            myTextView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    int position = getAdapterPosition();
-                    return true;
-                }
-            });
-
             //Allows me to delete the current row
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
