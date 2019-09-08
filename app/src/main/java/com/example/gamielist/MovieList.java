@@ -60,8 +60,12 @@ public class MovieList extends AppCompatActivity implements MyRecyclerViewAdapte
                 boolean handled = false;
 
                 if(i == EditorInfo.IME_ACTION_GO){
-                    movieList.add(movieTitleEdit.getText().toString().trim());//User cannot enter empty space before or after text
-                    handled = true;
+                    //Checks if list already contains item before adding it.
+                    if(movieList.contains(movieTitleEdit.getText().toString().trim())){
+                        adapter.showToast("Your list already contains this item");
+                    }else{
+                        movieList.add(movieTitleEdit.getText().toString().trim());//User cannot enter empty space before or after text
+                    }
                 }
 
                 //This will remove any entry that has no characters in the name

@@ -54,6 +54,7 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
             }
         });
 
+
         //Save EditText Content to arrayList
         gameTitleEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -61,14 +62,20 @@ public class GameList extends AppCompatActivity implements MyRecyclerViewAdapter
                 boolean handled = false;
 
                 if(i == EditorInfo.IME_ACTION_GO){
-                    gameList.add(gameTitleEdit.getText().toString().trim());
-                    handled = true;
+
+                    //Checks if list already contains item before adding it.
+                    if(gameList.contains(gameTitleEdit.getText().toString().trim())){
+                        adapter.showToast("Your list already contains this item");
+                    }else{
+                        gameList.add(gameTitleEdit.getText().toString().trim());//User cannot enter empty space before or after text
+                    }
                 }
 
                 //This will remove any entry that has no characters in the name
                 if(gameList.contains("")){
                     gameList.remove(gameList.get(gameList.size() -1));
                 }
+
                 //This will close the keyboard after the user has pushed the GO button on the soft keyboard
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(gameTitleEdit.getWindowToken(), 0);
